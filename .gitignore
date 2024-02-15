@@ -38,4 +38,4 @@
 #Backend
 
 /backend/node_modules
-/backed/.env
+/backend/.env
