@@ -53,7 +53,7 @@ export default function App() {
     }
   };
   return (
-    <Card className="max-w-[500px] mx-auto mt-10">
+    <Card className="max-w-[500px] mx-auto mt-20">
       <CardHeader className="flex gap-3 justify-center">
         <User size={30} />
         <p className="text-2xl">SignUp</p>

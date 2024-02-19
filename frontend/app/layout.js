@@ -12,7 +12,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="light bg-background text-default-700"><Providers>
+      <body className="light bg-background text-default-700">
+        <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }} >
       {children}
         </Providers> </body>
     </html>

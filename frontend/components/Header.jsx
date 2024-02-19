@@ -1,49 +1,57 @@
-import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
-import { CookingPot, Search } from "lucide-react";
+"use client";
 
+import React from "react";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Input,
+  DropdownItem,
+  DropdownTrigger,
+  Dropdown,
+  DropdownMenu,
+  Avatar,
+  Button,
+} from "@nextui-org/react";
+import { CookingPot, Search } from "lucide-react";
+import {useRouter} from "next/navigation";
 
 export default function Header() {
+  const router= useRouter()
   return (
-    <Navbar isBordered maxWidth="2xl">
-      <NavbarContent justify="start">
-        <NavbarBrand className="mr-4">
-        <CookingPot />
-          <p className="hidden sm:block font-bold text-inherit">ACME</p>
-        </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-3">
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Features
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Link href="#" aria-current="page" color="secondary">
-              Customers
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
+    <Navbar isBordered maxWidth="2xl"  className="border-0">
+      <NavbarContent justify="start" className="flex items-center">
+      <CookingPot size={40} color="#eb0000" className="hidden md:block" />
+        <NavbarItem>
+          <Link href="/" className=" font-bold text-inherit text-red-600 text-3xl ml-5">
+            MESSITUP
+          </Link>
+        </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent as="div" className="items-center" justify="end">
+      <NavbarContent as="div" className="items-center  flex" justify="end">
         <Input
           classNames={{
-            base: "max-w-full sm:max-w-[10rem] h-10",
+            base: "max-w-full sm:max-w-[30rem] min-w-[200px] h-10",
             mainWrapper: "h-full",
             input: "text-small",
-            inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+            inputWrapper:
+              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
           }}
           placeholder="Type to search..."
           size="sm"
           startContent={<Search size={18} />}
           type="search"
         />
-        <Dropdown placement="bottom-end">
+         <NavbarItem className="hidden md:block">
+          <Button onClick={()=> router.push("/login")} color="primary" size="sm" variant="bordered">Login</Button>
+        </NavbarItem>
+        <NavbarItem className="hidden md:block">
+          <Button onClick={()=> router.push("/signup")} color="primary" size="sm" variant="bordered">Signup</Button>
+        </NavbarItem>
+        <Dropdown placement="bottom-end" >
           <DropdownTrigger>
             <Avatar
               isBordered
@@ -67,7 +75,7 @@ export default function Header() {
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="danger">
-              Log Out
+              Log In
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
