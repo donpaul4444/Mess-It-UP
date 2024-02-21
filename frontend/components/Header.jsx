@@ -6,7 +6,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Input,
   DropdownItem,
   DropdownTrigger,
@@ -15,17 +14,32 @@ import {
   Avatar,
   Button,
 } from "@nextui-org/react";
-import { CookingPot, Search } from "lucide-react";
-import {useRouter} from "next/navigation";
+import { CookingPot, Search,User} from "lucide-react";
+import { useRouter} from "next/navigation";
+
+import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
+import { removeUser } from "@/Redux/userSlice";
 
 export default function Header() {
-  const router= useRouter()
+  const router = useRouter();
+  const user = useSelector((state) => state?.user?.userinfo);
+  const selector=useSelector((state)=> state)
+  const dispatch= useDispatch()
+
+  function Logout(){
+    dispatch(removeUser())
+    router.replace("/");
+  }
   return (
-    <Navbar isBordered maxWidth="2xl"  className="border-0">
+    <Navbar isBordered maxWidth="2xl" className="border-0">
       <NavbarContent justify="start" className="flex items-center">
-      <CookingPot size={40} color="#eb0000" className="hidden md:block" />
+        <CookingPot size={40} color="#eb0000" className="hidden md:block" />
         <NavbarItem>
-          <Link href="/" className=" font-bold text-inherit text-red-600 text-3xl ml-5">
+          <Link 
+            href="/"
+            className=" font-bold text-inherit text-red-600 text-3xl ml-5"
+          >
             MESSITUP
           </Link>
         </NavbarItem>
@@ -45,40 +59,63 @@ export default function Header() {
           startContent={<Search size={18} />}
           type="search"
         />
-         <NavbarItem className="hidden md:block">
-          <Button onClick={()=> router.push("/login")} color="primary" size="sm" variant="bordered">Login</Button>
-        </NavbarItem>
-        <NavbarItem className="hidden md:block">
-          <Button onClick={()=> router.push("/signup")} color="primary" size="sm" variant="bordered">Signup</Button>
-        </NavbarItem>
-        <Dropdown placement="bottom-end" >
-          <DropdownTrigger>
-            <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
-              color="secondary"
-              name="Jason Hughes"
-              size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            />
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
-            </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log In
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+
+        {!user ? (
+          <>
+            <NavbarItem className="hidden md:block">
+              <Button
+                onClick={() => router.push("/login")}
+                color="primary"
+                size="sm"
+                variant="bordered"
+              >
+                Login
+              </Button>
+            </NavbarItem>
+            <NavbarItem className="hidden md:block">
+              <Button
+                onClick={() => router.push("/signup")}
+                color="primary"
+                size="sm"
+                variant="bordered"
+              >
+                Signup
+              </Button>
+            </NavbarItem>
+          </>
+        ) : (
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+              {/* <Avatar
+                isBordered
+                as="button"
+                className="transition-transform"
+                color="secondary"
+                name="Jason Hughes"
+                size="sm"
+                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              /> */}
+              <User />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownItem key="profile" className="h-14 gap-2">
+                <p className="font-semibold">Signed in as</p>
+                <p className="font-semibold">{user.email}</p>
+              </DropdownItem>
+              {/* <DropdownItem key="settings">My Settings</DropdownItem>
+              <DropdownItem key="team_settings">Team Settings</DropdownItem>
+              <DropdownItem key="analytics">Analytics</DropdownItem>
+              <DropdownItem key="system">System</DropdownItem>
+              <DropdownItem key="configurations">Configurations</DropdownItem>
+              <DropdownItem key="help_and_feedback">
+                Help & Feedback
+              </DropdownItem> */}
+              <DropdownItem key="logout" color="danger" onClick={Logout}>
+                LogOut
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        )}
       </NavbarContent>
     </Navbar>
   );

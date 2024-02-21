@@ -1,5 +1,6 @@
 "use client"
 import React ,{useState} from "react";
+
 import {
   Card,
   CardHeader,
@@ -15,12 +16,16 @@ import { User } from "lucide-react";
 import NextLink from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import {useDispatch} from"react-redux"
+import { addUser, removeUser } from "@/Redux/userSlice";
+import {toast} from "react-hot-toast";
 
 export default function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState();
   const router = useRouter();
+  const dispatch=useDispatch()
 
  async function sendData() {
     const errorObj = {};
@@ -38,12 +43,17 @@ export default function App() {
     }
 
     try {
-      await axios.post("/api/login",{email,password})
+      let a=await axios.post("/api/login",{email,password})
+     dispatch(addUser(a.data.user))
       router.replace("/");
     } catch (error) {
       console.log(error);
-      const err= error.response.data 
-      if(err)setErrors(err)
+      let err= error.response?.data?.errors
+      if(err)return setErrors(err)
+
+      err=error.response?.data?.message||"something went wrong"
+      toast.error(err)
+      
     }
   }
   return (
