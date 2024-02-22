@@ -8,7 +8,13 @@ const cors= require("cors");
 const errorhandler = require("./middlewares/errorhandler.js");
 
 db.connect()
-app.use(cors())
+app.use(cors(
+  {
+  origin:process.env.FRONTEND_URL,
+  methods:["GET","POST","PATCH","DELETE","PUT"],
+  credentials:true,
+  }
+))
 // app.use(authenticateToken)
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
