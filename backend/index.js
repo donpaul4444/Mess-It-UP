@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(morgan("dev"))
 app.use("/api",userRouter)
 app.get("/",(req,res)=>{
-  res.json("Hello")
+  res.json(process.env.databaseurl)
 })
 app.use(errorhandler)
 app.listen(5000, () => {
