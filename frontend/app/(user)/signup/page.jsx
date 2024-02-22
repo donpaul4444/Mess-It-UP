@@ -44,7 +44,7 @@ export default function App() {
      return
  }
     try {
-       await axios.post(`/api/signup`, { email, password });
+       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/signup`, { email, password });
         router.replace("/login");
     
     } catch (error) {
