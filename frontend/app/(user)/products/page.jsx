@@ -3,7 +3,9 @@ import React from 'react'
 function page() {
   return (
     <div>
-      <p>Products</p>
+      <div className='flex justify-center items-center'>
+        <p className='text-red-600 text-2xl'>Under Construction....</p>
+      </div>
     </div>
   )
 }

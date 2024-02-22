@@ -21,7 +21,7 @@ export default function App() {
           size="lg"
           color="primary"
           className="mt-10 text-white text-lg"
-          onClick={()=> router.push("/login")}
+          onClick={()=> router.push("/products")}
         >
           Order Now
         </Button>
