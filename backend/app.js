@@ -15,8 +15,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(morgan("dev"))
 app.use("/api",userRouter)
-app.get("/api/test",(req,res)=>{
-  res.json({message:"success"})
+app.get("/",(req,res)=>{
+  res.json("Hello")
 })
 app.use(errorhandler)
 app.listen(5000, () => {
